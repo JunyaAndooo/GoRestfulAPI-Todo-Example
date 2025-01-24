@@ -28,5 +28,5 @@ FROM golang:1.23.5 as dev
 
 WORKDIR /app
 
-RUN go install github.com/cosmtrek/air@latest
+RUN go install github.com/air-verse/air@latest
 CMD ["air"]
