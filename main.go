@@ -7,6 +7,8 @@ import (
 	"net"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/JunyaAndooo/GoRestfulAPI-Todo-Example/config"
 	"golang.org/x/sync/errgroup"
@@ -21,6 +23,10 @@ func main() {
 }
 
 func run(ctx context.Context) (err error) {
+	// 処理実行中に終了シグナルを受け付けた場合、処理が完全に終わるまでシグナルを待機させる
+	ctx, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
 	cfg, err := config.New()
 	if err != nil {
 		return err
